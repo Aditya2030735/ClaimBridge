@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The ClaimBridge — Where Denials End & Revenue Begins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --magenta: #993556;
+    --magenta-light: #D4537E;
+    --magenta-pale: #FBEAF0;
+    --magenta-mid: #ED93B1;
+    --purple-deep: #26215C;
+    --purple-dark: #3C3489;
+    --purple-mid: #534AB7;
+    --purple-light: #EEEDFE;
+    --teal: #1D9E75;
+    --teal-dark: #0F6E56;
+    --teal-pale: #E1F5EE;
+    --gray-100: #F8F7F5;
+    --gray-200: #EDECEA;
+    --gray-400: #B4B2A9;
+    --gray-600: #5F5E5A;
+    --gray-900: #1A1A2E;
+    --white: #ffffff;
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --nav-h: 72px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--gray-900);
+    background: var(--white);
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    background: rgba(255,255,255,0.95);
+    border-bottom: 1px solid rgba(153,53,86,0.12);
+    backdrop-filter: blur(12px);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 24px rgba(38,33,92,0.08); }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1.15rem; color: var(--purple-dark); text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 34px; height: 34px;
+    background: var(--magenta);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo-icon svg { width: 20px; height: 20px; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.9rem; font-weight: 500; color: var(--gray-600);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--magenta); }
+
+  .nav-cta {
+    background: var(--magenta);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.15s !important;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--purple-mid) !important; transform: translateY(-1px); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--gray-900); border-radius: 2px; transition: all 0.3s; }
+
+  /* ── SECTIONS BASE ── */
+  section { padding: 100px 5%; }
+  .container { max-width: 1140px; margin: 0 auto; }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--magenta);
+    background: var(--magenta-pale);
+    padding: 5px 14px; border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.2;
+    color: var(--purple-deep);
+    margin-bottom: 1.25rem;
+  }
+  .section-title span { color: var(--magenta); }
+
+  .section-subtitle {
+    font-size: 1.05rem; color: var(--gray-600);
+    max-width: 580px; line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    padding-top: calc(var(--nav-h) + 60px);
+    padding-bottom: 80px;
+    background: linear-gradient(160deg, #F8F7FF 0%, #FEF0F5 50%, #F8FFFE 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-bg-shape {
+    position: absolute; border-radius: 50%;
+    opacity: 0.06; pointer-events: none;
+  }
+  .hero-bg-shape.s1 {
+    width: 600px; height: 600px;
+    background: var(--magenta);
+    top: -200px; right: -100px;
+  }
+  .hero-bg-shape.s2 {
+    width: 400px; height: 400px;
+    background: var(--purple-mid);
+    bottom: -100px; left: -80px;
+  }
+
+  .hero-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    max-width: 1140px; margin: 0 auto; width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--white);
+    border: 1px solid rgba(153,53,86,0.2);
+    border-radius: 30px; padding: 6px 16px 6px 8px;
+    font-size: 0.8rem; font-weight: 500; color: var(--magenta);
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--teal); flex-shrink: 0;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-weight: 700; line-height: 1.15;
+    color: var(--purple-deep);
+    margin-bottom: 1.25rem;
+  }
+  .hero-title .accent { color: var(--magenta); }
+
+  .hero-sub {
+    font-size: 1.1rem; color: var(--gray-600);
+    line-height: 1.8; margin-bottom: 2.25rem;
+    max-width: 500px;
+  }
+
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--magenta);
+    color: var(--white);
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600; font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--purple-mid); transform: translateY(-2px); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid rgba(153,53,86,0.35);
+    color: var(--magenta);
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600; font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+    background: transparent; cursor: pointer;
+  }
+  .btn-outline:hover { background: var(--magenta-pale); border-color: var(--magenta); }
+
+  .hero-trust-strip {
+    display: flex; flex-wrap: wrap; gap: 1.25rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(153,53,86,0.12);
+  }
+  .trust-pill {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.8rem; font-weight: 500; color: var(--gray-600);
+  }
+  .trust-pill-check {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--teal-pale);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .trust-pill-check::after {
+    content: '';
+    display: block; width: 5px; height: 3px;
+    border-left: 1.5px solid var(--teal-dark);
+    border-bottom: 1.5px solid var(--teal-dark);
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+
+  /* Hero Visual */
+  .hero-visual {
+    display: grid; grid-template-rows: auto auto;
+    gap: 1rem; position: relative;
+  }
+  .hero-card {
+    background: var(--white);
+    border: 1px solid rgba(38,33,92,0.1);
+    border-radius: 16px; padding: 1.5rem;
+  }
+  .hero-card-main {
+    position: relative; overflow: hidden;
+  }
+  .hero-card-main::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px; background: linear-gradient(90deg, var(--magenta), var(--purple-mid));
+  }
+  .hc-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 1rem; }
+  .hc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+  .hc-stat { background: var(--gray-100); border-radius: 10px; padding: 0.85rem; }
+  .hc-stat-num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--purple-dark); }
+  .hc-stat-label { font-size: 0.72rem; color: var(--gray-600); margin-top: 2px; }
+  .hc-stat.accent .hc-stat-num { color: var(--magenta); }
+  .hc-bar-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gray-600); margin-bottom: 4px; }
+  .hc-bar { height: 7px; background: var(--gray-200); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+  .hc-bar-fill { height: 100%; border-radius: 4px; }
+  .hc-bar-fill.c1 { background: var(--magenta); width: 87%; }
+  .hc-bar-fill.c2 { background: var(--teal); width: 94%; }
+  .hc-bar-fill.c3 { background: var(--purple-mid); width: 78%; }
+
+  .hero-card-mini {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hcm-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--teal-pale); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hcm-text { flex: 1; }
+  .hcm-title { font-size: 0.9rem; font-weight: 600; color: var(--purple-deep); }
+  .hcm-sub { font-size: 0.78rem; color: var(--gray-600); }
+  .hcm-badge {
+    background: var(--teal-pale); color: var(--teal-dark);
+    font-size: 0.72rem; font-weight: 600; padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── PROBLEM ── */
+  #problem { background: var(--white); }
+  .problem-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem;
+  }
+  .problem-card {
+    border: 1px solid rgba(153,53,86,0.15);
+    border-radius: 14px; padding: 1.75rem;
+    background: var(--white);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .problem-card:hover { border-color: var(--magenta); transform: translateY(-4px); }
+  .problem-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--magenta-pale);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .problem-icon svg { width: 22px; height: 22px; }
+  .problem-card h3 {
+    font-family: var(--font-display); font-size: 1rem; font-weight: 600;
+    color: var(--purple-deep); margin-bottom: 0.6rem;
+  }
+  .problem-card p { font-size: 0.88rem; color: var(--gray-600); line-height: 1.7; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--gray-100); }
+  .services-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 3.5rem; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem;
+  }
+  .service-card {
+    background: var(--white);
+    border: 1px solid rgba(38,33,92,0.08);
+    border-radius: 14px; padding: 1.5rem;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+  .service-card:hover {
+    border-color: var(--magenta-light);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(153,53,86,0.1);
+  }
+  .svc-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--purple-light);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .svc-icon svg { width: 20px; height: 20px; }
+  .service-card h3 {
+    font-family: var(--font-display); font-size: 0.92rem; font-weight: 600;
+    color: var(--purple-deep); margin-bottom: 0.5rem; line-height: 1.4;
+  }
+  .service-card p { font-size: 0.82rem; color: var(--gray-600); line-height: 1.65; }
+
+  /* ── WHY ── */
+  #why { background: var(--white); }
+  .why-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .why-visual {
+    background: var(--gray-100); border-radius: 20px; padding: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .why-visual::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--magenta), var(--purple-mid), var(--teal));
+  }
+  .why-list { display: flex; flex-direction: column; gap: 0.875rem; }
+  .why-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--white); border-radius: 12px; padding: 1rem 1.25rem;
+    border: 1px solid rgba(38,33,92,0.07);
+  }
+  .why-check {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--teal); flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .why-check::after {
+    content: '';
+    display: block; width: 7px; height: 4px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  .why-item-text h4 { font-size: 0.9rem; font-weight: 600; color: var(--purple-deep); }
+  .why-item-text p { font-size: 0.8rem; color: var(--gray-600); margin-top: 2px; }
+
+  .why-content { }
+  .why-content blockquote {
+    font-family: var(--font-display);
+    font-size: 1.25rem; font-weight: 600;
+    color: var(--purple-deep);
+    border-left: 4px solid var(--magenta);
+    padding-left: 1.25rem;
+    margin: 2rem 0;
+    line-height: 1.5;
+    border-radius: 0;
+  }
+  .why-content p { font-size: 1rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 1.25rem; }
+
+  /* ── PROCESS ── */
+  #process { background: var(--purple-deep); }
+  #process .section-title { color: var(--white); }
+  #process .section-subtitle { color: rgba(255,255,255,0.6); }
+  #process .section-eyebrow { background: rgba(255,255,255,0.1); color: #F4C0D1; }
+  .process-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; position: relative;
+  }
+  .process-grid::before {
+    content: '';
+    position: absolute; top: 30px; left: 12.5%; right: 12.5%; height: 2px;
+    background: rgba(255,255,255,0.15);
+    z-index: 0;
+  }
+  .process-step { padding: 0 1.5rem; text-align: center; position: relative; z-index: 1; }
+  .process-num {
+    width: 60px; height: 60px; border-radius: 50%;
+    border: 2px solid var(--magenta-light);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.25rem;
+    background: var(--purple-deep);
+    font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+    color: var(--magenta-light);
+  }
+  .process-step h3 {
+    font-family: var(--font-display); font-size: 0.95rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.5rem;
+  }
+  .process-step p { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+  /* ── STATS ── */
+  #stats { background: var(--magenta-pale); padding: 70px 5%; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1140px; margin: 0 auto; }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: var(--font-display); font-size: 3rem; font-weight: 700;
+    color: var(--magenta); line-height: 1;
+  }
+  .stat-label { font-size: 0.88rem; color: var(--gray-600); margin-top: 0.5rem; line-height: 1.5; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); }
+  .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-visual {
+    border-radius: 20px; overflow: hidden; position: relative;
+  }
+  .about-image-placeholder {
+    width: 100%; aspect-ratio: 4/5;
+    background: linear-gradient(160deg, var(--purple-light) 0%, var(--magenta-pale) 100%);
+    border-radius: 20px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 1rem;
+    border: 1px solid rgba(153,53,86,0.15);
+  }
+  .about-placeholder-icon {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(153,53,86,0.2);
+  }
+  .about-placeholder-icon svg { width: 36px; height: 36px; }
+  .about-caption {
+    font-size: 0.8rem; color: var(--magenta); text-align: center; padding: 0 2rem;
+    font-weight: 500;
+  }
+  .about-badge {
+    position: absolute; bottom: -16px; right: 20px;
+    background: var(--white); border: 1px solid rgba(38,33,92,0.1);
+    border-radius: 12px; padding: 0.75rem 1rem;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 4px 20px rgba(38,33,92,0.08);
+  }
+  .ab-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); }
+  .ab-text { font-size: 0.8rem; font-weight: 600; color: var(--purple-deep); }
+
+  .about-content p { font-size: 1rem; color: var(--gray-600); line-height: 1.85; margin-bottom: 1.25rem; }
+  .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 2rem; }
+  .value-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--gray-100); border-radius: 10px; padding: 0.75rem 1rem;
+    font-size: 0.84rem; font-weight: 500; color: var(--purple-deep);
+  }
+  .vp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--magenta); flex-shrink: 0; }
+
+  /* ── CTA BANNER ── */
+  #cta-banner {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-deep) 60%, #1A1040 100%);
+    padding: 80px 5%; text-align: center; position: relative; overflow: hidden;
+  }
+  #cta-banner::before {
+    content: '';
+    position: absolute; width: 500px; height: 500px; border-radius: 50%;
+    background: rgba(212,83,126,0.12); top: -200px; right: -100px;
+  }
+  .cta-banner-title {
+    font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700; color: var(--white); margin-bottom: 1rem; line-height: 1.2;
+    position: relative;
+  }
+  .cta-banner-sub { font-size: 1.05rem; color: rgba(255,255,255,0.65); margin-bottom: 2.5rem; position: relative; }
+  .cta-banner-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn-white {
+    background: var(--white); color: var(--magenta);
+    padding: 14px 32px; border-radius: 10px;
+    font-weight: 700; font-size: 0.95rem; text-decoration: none;
+    transition: transform 0.15s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-white:hover { transform: translateY(-2px); background: #FFF0F5; }
+  .btn-ghost {
+    border: 1.5px solid rgba(255,255,255,0.3); color: var(--white);
+    padding: 14px 32px; border-radius: 10px;
+    font-weight: 600; font-size: 0.95rem; text-decoration: none;
+    transition: background 0.2s; display: inline-block;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--gray-100); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+  .contact-info h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--purple-deep); margin-bottom: 1rem; }
+  .contact-info p { font-size: 0.95rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 2rem; }
+  .contact-detail {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .cd-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--magenta-pale); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cd-icon svg { width: 18px; height: 18px; }
+  .cd-text { font-size: 0.88rem; color: var(--gray-600); }
+  .cd-text strong { color: var(--purple-deep); display: block; margin-bottom: 1px; font-size: 0.82rem; }
+
+  .contact-form { background: var(--white); border-radius: 16px; padding: 2rem; border: 1px solid rgba(38,33,92,0.08); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--purple-deep); margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid rgba(38,33,92,0.12);
+    border-radius: 9px; font-family: var(--font-body);
+    font-size: 0.9rem; color: var(--gray-900);
+    background: var(--white); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--magenta);
+  }
+  .form-group textarea { min-height: 100px; resize: vertical; }
+  .form-submit {
+    width: 100%; background: var(--magenta); color: var(--white);
+    border: none; padding: 14px; border-radius: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .form-submit:hover { background: var(--purple-mid); transform: translateY(-2px); }
+  .form-note { font-size: 0.75rem; color: var(--gray-400); text-align: center; margin-top: 0.75rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--gray-900);
+    padding: 64px 5% 32px;
+    color: rgba(255,255,255,0.7);
+  }
+  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1140px; margin: 0 auto; }
+  .footer-brand p { font-size: 0.88rem; line-height: 1.75; margin-top: 1rem; max-width: 280px; }
+  .footer-brand .nav-logo { color: var(--white); margin-bottom: 0.25rem; }
+  .footer-tagline { font-size: 0.8rem; color: var(--magenta-mid); font-style: italic; margin-top: 0.5rem; margin-bottom: 1rem; }
+  .footer-col h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--white); margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul a { font-size: 0.87rem; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--magenta-mid); }
+  .footer-bottom {
+    max-width: 1140px; margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: rgba(255,255,255,0.35);
+  }
+  .footer-hipaa {
+    background: rgba(29,158,117,0.15); border: 1px solid rgba(29,158,117,0.3);
+    color: #5DCAA5; padding: 5px 14px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 600;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up-d1 { transition-delay: 0.1s; }
+  .fade-up-d2 { transition-delay: 0.2s; }
+  .fade-up-d3 { transition-delay: 0.3s; }
+  .fade-up-d4 { transition-delay: 0.4s; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero-inner, .services-intro, .why-inner, .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-visual { display: none; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .problem-grid { grid-template-columns: 1fr 1fr; }
+    .process-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-grid::before { display: none; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    section { padding: 70px 5%; }
+    .services-grid { grid-template-columns: 1fr; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .about-values { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 14 Q10 4 18 14" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="10" cy="5" r="2" fill="white"/>
+      </svg>
+    </div>
+    The ClaimBridge
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">How It Works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Free Consultation</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-shape s1"></div>
+  <div class="hero-bg-shape s2"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge fade-up">
+        <div class="hero-badge-dot"></div>
+        HIPAA-Compliant · 100% Dental-Focused
+      </div>
+      <h1 class="hero-title fade-up fade-up-d1">
+        Stop Losing Revenue<br>to <span class="accent">Denied Claims.</span>
+      </h1>
+      <p class="hero-sub fade-up fade-up-d2">
+        The ClaimBridge is your dedicated dental billing partner — handling every claim, appeal, and follow-up so you can stay completely focused on your patients.
+      </p>
+      <div class="hero-ctas fade-up fade-up-d3">
+        <a href="#contact" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Schedule a Free Consultation
+        </a>
+        <a href="#services" class="btn-outline">See Our Services</a>
+      </div>
+      <div class="hero-trust-strip fade-up fade-up-d4">
+        <div class="trust-pill"><div class="trust-pill-check"></div> HIPAA Compliant</div>
+        <div class="trust-pill"><div class="trust-pill-check"></div> U.S. Time Zone Support</div>
+        <div class="trust-pill"><div class="trust-pill-check"></div> Transparent Reporting</div>
+        <div class="trust-pill"><div class="trust-pill-check"></div> Experienced RCM Team</div>
+      </div>
+    </div>
+    <div class="hero-visual fade-up fade-up-d2">
+      <div class="hero-card hero-card-main">
+        <div class="hc-label">Revenue Cycle Dashboard</div>
+        <div class="hc-stats">
+          <div class="hc-stat accent">
+            <div class="hc-stat-num">94%</div>
+            <div class="hc-stat-label">Clean claim rate</div>
+          </div>
+          <div class="hc-stat">
+            <div class="hc-stat-num">48h</div>
+            <div class="hc-stat-label">Avg. submission time</div>
+          </div>
+        </div>
+        <div class="hc-bar-label"><span>Claims submitted</span><span>87%</span></div>
+        <div class="hc-bar"><div class="hc-bar-fill c1"></div></div>
+        <div class="hc-bar-label"><span>Denials recovered</span><span>94%</span></div>
+        <div class="hc-bar"><div class="hc-bar-fill c2"></div></div>
+        <div class="hc-bar-label"><span>Eligibility verified</span><span>78%</span></div>
+        <div class="hc-bar"><div class="hc-bar-fill c3"></div></div>
+      </div>
+      <div class="hero-card hero-card-mini">
+        <div class="hcm-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3.5" stroke="#1D9E75" stroke-width="1.75"/><path d="M3 17c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="#1D9E75" stroke-width="1.75" stroke-linecap="round"/></svg>
+        </div>
+        <div class="hcm-text">
+          <div class="hcm-title">New claim processed</div>
+          <div class="hcm-sub">Delta Dental · Patient: J. Rivera</div>
+        </div>
+        <div class="hcm-badge">Submitted</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-eyebrow">The challenge</div>
+    <h2 class="section-title">Your Practice Deserves to <span>Get Paid</span> — Every Time.</h2>
+    <p class="section-subtitle">Most dental offices lose thousands every month to billing errors, slow follow-ups, and unresolved denials. You didn't build your practice for that.</p>
+    <div class="problem-grid">
+      <div class="problem-card fade-up">
+        <div class="problem-icon">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#993556" stroke-width="1.75" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8.5"/><path d="M11 7v4.5M11 15h.01"/>
+          </svg>
+        </div>
+        <h3>Claim denials piling up</h3>
+        <p>Insurers reject claims and nobody follows up fast enough. Denied revenue quietly disappears from your collections.</p>
+      </div>
+      <div class="problem-card fade-up fade-up-d1">
+        <div class="problem-icon">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#993556" stroke-width="1.75" stroke-linecap="round">
+            <rect x="3" y="5" width="16" height="14" rx="2"/><path d="M7 5V3M15 5V3M3 9h16"/>
+          </svg>
+        </div>
+        <h3>Eligibility gaps costing you</h3>
+        <p>Treating patients with expired or inactive coverage leads to costly write-offs that strain your bottom line.</p>
+      </div>
+      <div class="problem-card fade-up fade-up-d2">
+        <div class="problem-icon">
+          <svg viewBox="0 0 22 22" fill="none" stroke="#993556" stroke-width="1.75" stroke-linecap="round">
+            <path d="M19 3H3a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V5a2 2 0 00-2-2z"/><path d="M7 8h8M7 12h5"/>
+          </svg>
+        </div>
+        <h3>Front desk overload</h3>
+        <p>Your team is drowning in billing tasks, pulling their attention away from patients and the experience you've built.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-intro">
+      <div>
+        <div class="section-eyebrow">What we do</div>
+        <h2 class="section-title">Everything Billing. <span>Done Right.</span></h2>
+      </div>
+      <div>
+        <p class="section-subtitle" style="margin-bottom:0;">We handle the full revenue cycle — from eligibility verification to payment posting — so nothing slips through the cracks and you get paid faster.</p>
+      </div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="svc-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
+            <path d="M10 2a6 6 0 100 12A6 6 0 0010 2z"/><path d="M10 6v4l2 2"/>
+          </svg>
+        </div>
+        <h3>Eligibility & Benefits Verification</h3>
+        <p>Verify patient coverage before every appointment. Avoid denials from inactive or invalid policies.</p>
+      </div>
+      <div class="service-card fade-up fade-up-d1">
+        <div class="svc-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
+            <path d="M3 3h14v14H3z" rx="2"/><path d="M7 7h6M7 10h4"/>
+          </svg>
+        </div>
+        <h3>Claim Submission & Tracking</h3>
+        <p>Accurate, scrubbed claims submitted promptly. We manage resubmissions and continuous follow-up until paid.</p>
+      </div>
+      <div class="service-card fade-up fade-up-d2">
+        <div class="svc-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
+            <circle cx="10" cy="10" r="8"/><path d="M7 10l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Denial Management & Appeals</h3>
+        <p>Systematic follow-up on aging claims. We work directly with insurers to resolve denials and recover revenue.</p>
+      </div>
+      <div class="service-card fade-up fade-up-d3">
+        <div class="svc-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
+            <path d="M2 10h16M10 2v16"/>
+          </svg>
+        </div>
+        <h3>Payment Posting (ERA/EOB)</h3>
+        <p>Post ERA and EOB payments accurately with daily reconciliation to capture every dollar of revenue.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="svc-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
+            <rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 7h6M7 10h6M7 13h4"/>
+          </svg>
+        </div>
+        <h3>Prior Authorization Assistance</h3>
+        <p>We submit and track authorization requests, completing all required documentation to reduce treatment delays.</p>
+      </div>
+      <div class="service-card fade-up fade-up-d1">
+        <div class="svc-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
+            <circle cx="10" cy="7" r="3.5"/><path d="M3 17c0-3.866 3.134-7 7-7s7 3.134 7 7"/>
+          </svg>
+        </div>
+        <h3>Provider Credentialing</h3>
+        <p>Enroll new providers with insurance networks, manage re-credentialing, and ensure ongoing compliance.</p>
+      </div>
+      <div class="service-card fade-up fade-up-d2">
+        <div class="svc-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
+            <path d="M18 4l-2 14H4L2 4"/><path d="M10 4V2M7 4l.5-2M13 4l-.5-2"/>
+          </svg>
+        </div>
+        <h3>Patient Calling Services</h3>
+        <p>Proactively call patients to confirm or fill appointments. Decrease no-shows and improve chair utilization.</p>
+      </div>
+      <div class="service-card fade-up fade-up-d3">
+        <div class="svc-icon">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
+            <path d="M4 4h12v12H4z" rx="1"/><path d="M8 4v12M4 8h12M4 12h12"/>
+          </svg>
+        </div>
+        <h3>Fee Schedule Maintenance</h3>
+        <p>Maintain up-to-date payer fee schedules to support consistent billing and accurate reimbursement every time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="container">
+    <div class="why-inner">
+      <div class="why-visual">
+        <div class="hc-label" style="margin-bottom:1.25rem;">Why dental practices choose us</div>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-check"></div>
+            <div class="why-item-text">
+              <h4>HIPAA-compliant operations</h4>
+              <p>Every process is built around patient data security and full regulatory compliance.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-check"></div>
+            <div class="why-item-text">
+              <h4>100% dental billing focus</h4>
+              <p>We don't split attention across specialties. Dental is all we do — and we do it exceptionally well.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-check"></div>
+            <div class="why-item-text">
+              <h4>Experienced RCM professionals</h4>
+              <p>Seasoned billing specialists who know the codes, payers, and processes inside out.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-check"></div>
+            <div class="why-item-text">
+              <h4>Transparent weekly A/R reporting</h4>
+              <p>Full visibility into your revenue cycle — no black boxes, no surprises, ever.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-check"></div>
+            <div class="why-item-text">
+              <h4>U.S. time zone support available</h4>
+              <p>We work on your schedule, aligned with your office hours and your payers.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-content">
+        <div class="section-eyebrow">Why ClaimBridge</div>
+        <h2 class="section-title">More Than a Billing Service. <span>A Partner Who Delivers.</span></h2>
+        <p>We don't just submit claims — we own the outcome. From eligibility to collection, we work as a seamless extension of your team, giving you full visibility and zero guesswork.</p>
+        <p>Behind every claim is a story of hard work and patient care. We make sure that story has a fair ending — your earnings, in your hands, without the worry.</p>
+        <blockquote>"You provide care. We protect the revenue behind it."</blockquote>
+        <a href="#contact" class="btn-primary">Let's Work Together</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 3.5rem;">
+      <div class="section-eyebrow">Getting started</div>
+      <h2 class="section-title">Simple Onboarding. <span style="color:#ED93B1;">Immediate Results.</span></h2>
+      <p class="section-subtitle" style="margin: 0 auto;">We plug into your existing workflow in days — not months. No disruption, no steep learning curve.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step fade-up">
+        <div class="process-num">01</div>
+        <h3>Free Consultation</h3>
+        <p>We learn your practice, billing volume, software, and biggest pain points.</p>
+      </div>
+      <div class="process-step fade-up fade-up-d1">
+        <div class="process-num">02</div>
+        <h3>Seamless Onboarding</h3>
+        <p>We integrate with your practice management system — zero disruption to daily operations.</p>
+      </div>
+      <div class="process-step fade-up fade-up-d2">
+        <div class="process-num">03</div>
+        <h3>We Go to Work</h3>
+        <p>Claims, verifications, follow-ups, appeals — all handled by our dedicated team.</p>
+      </div>
+      <div class="process-step fade-up fade-up-d3">
+        <div class="process-num">04</div>
+        <h3>You See Results</h3>
+        <p>Faster payments, fewer denials, and weekly reports so you always know where you stand.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 3rem;">
+      <a href="#contact" class="btn-white" style="display:inline-block; padding: 14px 36px; border-radius: 10px; font-weight:700; font-size:0.95rem; background:var(--white); color:var(--magenta); text-decoration:none;">Start with a Free Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item fade-up">
+      <div class="stat-num">95%+</div>
+      <div class="stat-label">Target clean claim rate on first submission</div>
+    </div>
+    <div class="stat-item fade-up fade-up-d1">
+      <div class="stat-num">48h</div>
+      <div class="stat-label">Average claim submission turnaround time</div>
+    </div>
+    <div class="stat-item fade-up fade-up-d2">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Dedicated focus on dental billing only</div>
+    </div>
+    <div class="stat-item fade-up fade-up-d3">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Black boxes — full transparency, always</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual">
+        <div class="about-image-placeholder">
+          <div class="about-placeholder-icon">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <path d="M4 28 Q18 8 32 28" stroke="#993556" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <circle cx="18" cy="10" r="4" fill="#993556" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="about-caption">Add your team or office photo here.<br>Real photography builds real trust.</div>
+        </div>
+        <div class="about-badge">
+          <div class="ab-dot"></div>
+          <div class="ab-text">Trusted by dental practices across the U.S.</div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="section-eyebrow">Our mission</div>
+        <h2 class="section-title">Built by <span>Billing Experts</span>, for Dental Practices.</h2>
+        <p>At The ClaimBridge, we believe every claim represents real work, real care, and real value. Our mission is to make sure your practice gets paid for every service it delivers — accurately, completely, and on time.</p>
+        <p>We set the standard for trust in dental billing. We handle every claim with care, resolve problems quickly, and stand by every commitment we make — so you always know you can count on us.</p>
+        <div class="about-values">
+          <div class="value-pill"><div class="vp-dot"></div> Trust & accountability</div>
+          <div class="value-pill"><div class="vp-dot"></div> Accurate outcomes</div>
+          <div class="value-pill"><div class="vp-dot"></div> Dental-first approach</div>
+          <div class="value-pill"><div class="vp-dot"></div> Full transparency</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta-banner">
+  <div class="cta-banner-title">Ready to Stop Leaving<br>Money on the Table?</div>
+  <p class="cta-banner-sub">Let's talk about your practice. A free 20-minute consultation is all it takes to get started.</p>
+  <div class="cta-banner-btns">
+    <a href="#contact" class="btn-white">Get My Free Consultation</a>
+    <a href="mailto:thclaimbridge@gmail.com" class="btn-ghost">Email Us Directly</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <div class="section-eyebrow">Get in touch</div>
+        <h2>Let's Build a Stronger Revenue Cycle — Together.</h2>
+        <p>Tell us a little about your practice. We'll reach out within one business day to set up your free consultation.</p>
+        <div class="contact-detail">
+          <div class="cd-icon">
+            <svg viewBox="0 0 18 18" fill="none" stroke="#993556" stroke-width="1.75" stroke-linecap="round">
+              <path d="M2 4h14v10H2z" rx="1"/><path d="M2 4l7 6 7-6"/>
+            </svg>
+          </div>
+          <div class="cd-text">
+            <strong>Email</strong>
+            thclaimbridge@gmail.com
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">
+            <svg viewBox="0 0 18 18" fill="none" stroke="#993556" stroke-width="1.75" stroke-linecap="round">
+              <path d="M9 2a5.5 5.5 0 110 11A5.5 5.5 0 019 2z"/><path d="M14.5 14.5l2 2"/>
+            </svg>
+          </div>
+          <div class="cd-text">
+            <strong>LinkedIn</strong>
+            @The Claimbridge
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="cd-icon">
+            <svg viewBox="0 0 18 18" fill="none" stroke="#993556" stroke-width="1.75" stroke-linecap="round">
+              <rect x="2" y="2" width="14" height="14" rx="4"/><circle cx="9" cy="9" r="3"/><circle cx="13.5" cy="4.5" r="0.75" fill="#993556"/>
+            </svg>
+          </div>
+          <div class="cd-text">
+            <strong>Instagram</strong>
+            @TheClaimbridge
+          </div>
+        </div>
+        <div style="margin-top: 2rem; background: var(--teal-pale); border-radius: 12px; padding: 1rem 1.25rem; border: 1px solid rgba(29,158,117,0.2);">
+          <div style="font-size: 0.82rem; font-weight: 600; color: var(--teal-dark); margin-bottom: 4px;">We respond within 1 business day</div>
+          <div style="font-size: 0.78rem; color: var(--teal-dark); opacity: 0.8;">HIPAA-compliant communications. Your information is always secure.</div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Practice Name</label>
+            <input type="text" placeholder="Your dental practice">
+          </div>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Dr. / Office Manager">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="you@yourpractice.com">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="(555) 000-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Practice Management Software</label>
+          <select>
+            <option value="">Select your PMS...</option>
+            <option>Dentrix</option>
+            <option>Eaglesoft</option>
+            <option>Open Dental</option>
+            <option>Curve Dental</option>
+            <option>Carestream</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Biggest billing challenge</label>
+          <select>
+            <option value="">What's hurting you most?</option>
+            <option>High denial rate</option>
+            <option>Eligibility verification issues</option>
+            <option>Slow collections / aging A/R</option>
+            <option>Provider credentialing</option>
+            <option>Staff overwhelmed with billing</option>
+            <option>All of the above</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Anything else? (optional)</label>
+          <textarea placeholder="Tell us more about your practice or what you're hoping to fix..."></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit(this)">Request My Free Consultation →</button>
+        <p class="form-note">No spam. No pressure. Just a straightforward conversation about your billing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo" style="display:inline-flex; margin-bottom:0.25rem;">
+        <div class="nav-logo-icon" style="background:var(--magenta-light);">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M2 14 Q10 4 18 14" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="10" cy="5" r="2" fill="white"/></svg>
+        </div>
+        The ClaimBridge
+      </a>
+      <div class="footer-tagline">"Where Denials End & Revenue Begins."</div>
+      <p>Your dedicated dental billing partner. Helping practices across the U.S. get paid faster, with less stress and full transparency.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Eligibility Verification</a></li>
+        <li><a href="#services">Claim Submission</a></li>
+        <li><a href="#services">Denial Management</a></li>
+        <li><a href="#services">Payment Posting</a></li>
+        <li><a href="#services">Prior Authorization</a></li>
+        <li><a href="#services">Credentialing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#why">Why ClaimBridge</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="mailto:thclaimbridge@gmail.com">thclaimbridge@gmail.com</a></li>
+        <li><a href="#">LinkedIn: @The Claimbridge</a></li>
+        <li><a href="#">Instagram: @TheClaimbridge</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 The ClaimBridge. All rights reserved.</div>
+    <div class="footer-hipaa">HIPAA-Compliant Operations</div>
+    <div>Privacy Policy · Terms of Service</div>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const isOpen = links.style.display === 'flex';
+    links.style.cssText = isOpen ? '' : 'display:flex; flex-direction:column; position:fixed; top:72px; left:0; right:0; background:white; padding:1.5rem 5%; gap:1rem; border-bottom:1px solid rgba(153,53,86,0.12); z-index:99;';
+  }
+
+  function handleSubmit(btn) {
+    btn.textContent = 'Sending...';
+    btn.style.background = 'var(--teal)';
+    setTimeout(() => {
+      btn.textContent = 'Request Sent! We will be in touch soon.';
+      btn.style.background = 'var(--teal-dark)';
+    }, 1200);
+  }
+</script>
+</body>
+</html>
