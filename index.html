@@ -11,21 +11,21 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --magenta: #993556;
-    --magenta-light: #D4537E;
-    --magenta-pale: #FBEAF0;
-    --magenta-mid: #ED93B1;
-    --purple-deep: #26215C;
-    --purple-dark: #3C3489;
-    --purple-mid: #534AB7;
-    --purple-light: #EEEDFE;
-    --teal: #1D9E75;
-    --teal-dark: #0F6E56;
-    --teal-pale: #E1F5EE;
+    --magenta: #E20074;
+    --magenta-light: #F05199;
+    --magenta-pale: #FCEBF4;
+    --magenta-mid: #E82A88;
+    --purple-deep: #4A0030;
+    --purple-dark: #870058;
+    --purple-mid: #B00072;
+    --purple-light: #F5E6EF;
+    --teal: #007A87;
+    --teal-dark: #00565F;
+    --teal-pale: #E6F5F6;
     --gray-100: #F8F7F5;
     --gray-200: #EDECEA;
-    --gray-400: #B4B2A9;
-    --gray-600: #5F5E5A;
+    --gray-400: #7A7A7A;
+    --gray-600: #4A4A4A;
     --gray-900: #1A1A2E;
     --white: #ffffff;
     --font-display: 'Sora', sans-serif;
@@ -57,17 +57,13 @@
   nav.scrolled { box-shadow: 0 2px 24px rgba(38,33,92,0.08); }
 
   .nav-logo {
-    display: flex; align-items: center; gap: 10px;
+    display: flex; align-items: center; gap: 6px;
     font-family: var(--font-display); font-weight: 700;
-    font-size: 1.15rem; color: var(--purple-dark); text-decoration: none;
+    font-size: 1.25rem; text-decoration: none;
   }
-  .nav-logo-icon {
-    width: 34px; height: 34px;
-    background: var(--magenta);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .nav-logo-icon svg { width: 20px; height: 20px; }
+  .logo-text-the { color: var(--magenta); }
+  .logo-text-cb { color: var(--purple-dark); }
+  .footer-brand .logo-text-the, .footer-brand .logo-text-cb { color: var(--white); }
 
   .nav-links {
     display: flex; align-items: center; gap: 2rem;
@@ -93,6 +89,11 @@
 
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
   .hamburger span { display: block; width: 22px; height: 2px; background: var(--gray-900); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-links.mob-open a { padding: 0.75rem 0; font-size: 1rem; border-bottom: 1px solid rgba(153,53,86,0.08); width: 100%; }
+  .nav-links.mob-open .nav-cta { margin-top: 0.5rem; text-align: center; border-bottom: none; }
 
   /* ── SECTIONS BASE ── */
   section { padding: 100px 5%; }
@@ -135,6 +136,7 @@
   .hero-bg-shape {
     position: absolute; border-radius: 50%;
     opacity: 0.06; pointer-events: none;
+    animation: pulse-shape 12s ease-in-out infinite;
   }
   .hero-bg-shape.s1 {
     width: 600px; height: 600px;
@@ -151,6 +153,7 @@
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 4rem; align-items: center;
     max-width: 1140px; margin: 0 auto; width: 100%;
+    position: relative; z-index: 1;
   }
 
   .hero-badge {
@@ -259,12 +262,17 @@
   .hc-bar-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gray-600); margin-bottom: 4px; }
   .hc-bar { height: 7px; background: var(--gray-200); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
   .hc-bar-fill { height: 100%; border-radius: 4px; }
-  .hc-bar-fill.c1 { background: var(--magenta); width: 87%; }
-  .hc-bar-fill.c2 { background: var(--teal); width: 94%; }
-  .hc-bar-fill.c3 { background: var(--purple-mid); width: 78%; }
+  .hc-bar-fill.c1 { background: var(--magenta); }
+  .hc-bar-fill.c2 { background: var(--teal); }
+  .hc-bar-fill.c3 { background: var(--purple-mid); }
+  .grow-bar { width: 0 !important; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+  .grow-bar.visible.c1 { width: 87% !important; }
+  .grow-bar.visible.c2 { width: 94% !important; }
+  .grow-bar.visible.c3 { width: 78% !important; }
 
   .hero-card-mini {
     display: flex; align-items: center; gap: 12px;
+    animation: float 4s ease-in-out infinite;
   }
   .hcm-icon {
     width: 44px; height: 44px; border-radius: 10px;
@@ -320,8 +328,8 @@
   }
   .service-card:hover {
     border-color: var(--magenta-light);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(153,53,86,0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(153,53,86,0.15);
   }
   .svc-icon {
     width: 44px; height: 44px; border-radius: 10px;
@@ -383,10 +391,7 @@
   .why-content p { font-size: 1rem; color: var(--gray-600); line-height: 1.8; margin-bottom: 1.25rem; }
 
   /* ── PROCESS ── */
-  #process { background: var(--purple-deep); }
-  #process .section-title { color: var(--white); }
-  #process .section-subtitle { color: rgba(255,255,255,0.6); }
-  #process .section-eyebrow { background: rgba(255,255,255,0.1); color: #F4C0D1; }
+  #process { background: var(--white); }
   .process-grid {
     display: grid; grid-template-columns: repeat(4, 1fr);
     gap: 0; position: relative;
@@ -394,24 +399,24 @@
   .process-grid::before {
     content: '';
     position: absolute; top: 30px; left: 12.5%; right: 12.5%; height: 2px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(226,0,116,0.15);
     z-index: 0;
   }
   .process-step { padding: 0 1.5rem; text-align: center; position: relative; z-index: 1; }
   .process-num {
     width: 60px; height: 60px; border-radius: 50%;
-    border: 2px solid var(--magenta-light);
+    border: 2px solid var(--magenta);
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 1.25rem;
-    background: var(--purple-deep);
+    background: var(--white);
     font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
-    color: var(--magenta-light);
+    color: var(--magenta);
   }
   .process-step h3 {
     font-family: var(--font-display); font-size: 0.95rem; font-weight: 600;
-    color: var(--white); margin-bottom: 0.5rem;
+    color: var(--purple-deep); margin-bottom: 0.5rem;
   }
-  .process-step p { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+  .process-step p { font-size: 0.82rem; color: var(--gray-600); line-height: 1.65; }
 
   /* ── STATS ── */
   #stats { background: var(--magenta-pale); padding: 70px 5%; }
@@ -425,41 +430,10 @@
 
   /* ── ABOUT ── */
   #about { background: var(--white); }
-  .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-  .about-visual {
-    border-radius: 20px; overflow: hidden; position: relative;
-  }
-  .about-image-placeholder {
-    width: 100%; aspect-ratio: 4/5;
-    background: linear-gradient(160deg, var(--purple-light) 0%, var(--magenta-pale) 100%);
-    border-radius: 20px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 1rem;
-    border: 1px solid rgba(153,53,86,0.15);
-  }
-  .about-placeholder-icon {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: var(--white);
-    display: flex; align-items: center; justify-content: center;
-    border: 1px solid rgba(153,53,86,0.2);
-  }
-  .about-placeholder-icon svg { width: 36px; height: 36px; }
-  .about-caption {
-    font-size: 0.8rem; color: var(--magenta); text-align: center; padding: 0 2rem;
-    font-weight: 500;
-  }
-  .about-badge {
-    position: absolute; bottom: -16px; right: 20px;
-    background: var(--white); border: 1px solid rgba(38,33,92,0.1);
-    border-radius: 12px; padding: 0.75rem 1rem;
-    display: flex; align-items: center; gap: 10px;
-    box-shadow: 0 4px 20px rgba(38,33,92,0.08);
-  }
-  .ab-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); }
-  .ab-text { font-size: 0.8rem; font-weight: 600; color: var(--purple-deep); }
+  .about-inner { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 720px; margin: 0 auto; }
 
-  .about-content p { font-size: 1rem; color: var(--gray-600); line-height: 1.85; margin-bottom: 1.25rem; }
-  .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 2rem; }
+  .about-content p { font-size: 1rem; color: var(--gray-600); line-height: 1.85; margin-bottom: 1.25rem; text-align: center; }
+  .about-values { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 2rem; }
   .value-pill {
     display: flex; align-items: center; gap: 8px;
     background: var(--gray-100); border-radius: 10px; padding: 0.75rem 1rem;
@@ -549,7 +523,7 @@
     padding: 64px 5% 32px;
     color: rgba(255,255,255,0.7);
   }
-  .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1140px; margin: 0 auto; }
+  .footer-inner { display: grid; grid-template-columns: 1.5fr 2.25fr 1fr 1.25fr; gap: 2.5rem; max-width: 1140px; margin: 0 auto; }
   .footer-brand p { font-size: 0.88rem; line-height: 1.75; margin-top: 1rem; max-width: 280px; }
   .footer-brand .nav-logo { color: var(--white); margin-bottom: 0.25rem; }
   .footer-tagline { font-size: 0.8rem; color: var(--magenta-mid); font-style: italic; margin-top: 0.5rem; margin-bottom: 1rem; }
@@ -571,50 +545,309 @@
   }
 
   /* ── ANIMATIONS ── */
-  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up { opacity: 0; transform: translateY(28px) scale(0.96); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+  .fade-up.visible { opacity: 1; transform: translateY(0) scale(1); }
   .fade-up-d1 { transition-delay: 0.1s; }
   .fade-up-d2 { transition-delay: 0.2s; }
   .fade-up-d3 { transition-delay: 0.3s; }
   .fade-up-d4 { transition-delay: 0.4s; }
 
-  /* ── MOBILE ── */
+  @keyframes pulse-shape {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(5deg); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  /* Button Shine & Service Card Hover */
+  .btn-primary, .btn-white, .form-submit { position: relative; overflow: hidden; }
+  .btn-primary::after, .btn-white::after, .form-submit::after {
+    content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transform: skewX(-20deg); transition: 0s;
+  }
+  .btn-primary:hover::after, .btn-white:hover::after, .form-submit:hover::after {
+    left: 150%; transition: left 0.65s ease;
+  }
+  .service-card .svc-icon svg { transition: transform 0.3s ease, stroke 0.3s ease; }
+  .service-card:hover .svc-icon svg { transform: scale(1.15); stroke: var(--magenta); }
+
+  /* ═══════════════════════════════════════════
+     RESPONSIVE — every breakpoint
+     1280px  Large desktop
+     1024px  Laptop / small desktop
+     900px   Tablet landscape
+     768px   Tablet portrait
+     600px   Large phone landscape
+     480px   Phone
+     380px   Small phone
+  ═══════════════════════════════════════════ */
+
+  /* ── 1280px: constrain hero visual on narrower desktops ── */
+  @media (max-width: 1280px) {
+    .hero-inner { gap: 2.5rem; }
+    .footer-inner { gap: 1.75rem; }
+  }
+
+  /* ── 1024px: laptop ── */
+  @media (max-width: 1024px) {
+    :root { --nav-h: 68px; }
+    section { padding: 80px 5%; }
+    .hero-title { font-size: clamp(2rem, 4vw, 3.2rem); }
+    .services-grid { grid-template-columns: repeat(3, 1fr); }
+    .process-grid { grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .footer-inner { grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem; }
+    .why-inner { gap: 3rem; }
+    .contact-inner { gap: 3rem; }
+  }
+
+  /* ── 900px: tablet landscape / small laptop ── */
   @media (max-width: 900px) {
-    .hero-inner, .services-intro, .why-inner, .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .hero-visual { display: none; }
-    .services-grid { grid-template-columns: repeat(2, 1fr); }
-    .problem-grid { grid-template-columns: 1fr 1fr; }
-    .process-grid { grid-template-columns: repeat(2, 1fr); }
-    .process-grid::before { display: none; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .footer-inner { grid-template-columns: 1fr 1fr; }
+    :root { --nav-h: 64px; }
+    section { padding: 72px 5%; }
+
+    /* Nav */
     .nav-links { display: none; }
     .hamburger { display: flex; }
-    .form-row { grid-template-columns: 1fr; }
+
+    /* Hero */
+    .hero-inner { grid-template-columns: 1fr; gap: 0; }
+    .hero-visual { display: none; }
+    #hero { min-height: auto; padding-top: calc(var(--nav-h) + 48px); padding-bottom: 60px; }
+    .hero-title { font-size: clamp(2rem, 5vw, 3rem); }
+    .hero-sub { max-width: 100%; font-size: 1rem; }
+    .hero-trust-strip { gap: 1rem; }
+
+    /* Grids */
+    .services-intro { grid-template-columns: 1fr; gap: 1rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .problem-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .why-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+
+    /* Process */
+    .process-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .process-grid::before { display: none; }
+    .process-step { padding: 0 0.5rem; }
+
+    /* Stats */
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .stat-num { font-size: 2.5rem; }
+
+    /* Footer */
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-bottom { flex-wrap: wrap; gap: 0.75rem; justify-content: center; text-align: center; }
+
+    /* About */
+    .about-values { gap: 0.6rem; }
+
+    /* CTA banner */
+    #cta-banner { padding: 60px 5%; }
+    .cta-banner-btns { flex-direction: column; align-items: center; }
+    .btn-white, .btn-ghost { width: 100%; max-width: 320px; text-align: center; }
   }
-  @media (max-width: 560px) {
-    section { padding: 70px 5%; }
+
+  /* ── 768px: tablet portrait ── */
+  @media (max-width: 768px) {
+    section { padding: 60px 5%; }
+    .section-title { font-size: clamp(1.75rem, 5vw, 2.5rem); }
+    .section-subtitle { font-size: 0.95rem; }
+
+    /* Hero */
+    .hero-title { font-size: clamp(1.9rem, 6vw, 2.6rem); }
+    .hero-badge { font-size: 0.75rem; }
+    .hero-ctas { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .btn-primary, .btn-outline { width: 100%; max-width: 320px; justify-content: center; }
+    .hero-trust-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    /* Why */
+    .why-content blockquote { font-size: 1.1rem; }
+
+    /* Contact */
+    .contact-info h2 { font-size: 1.35rem; }
+    .contact-form { padding: 1.5rem; }
+
+    /* Stats */
+    #stats { padding: 50px 5%; }
+    .stat-num { font-size: 2.25rem; }
+
+    /* Software badges */
+    #software .section-title { font-size: clamp(1.2rem, 4vw, 1.75rem); }
+  }
+
+  /* ── 600px: large phone / small tablet landscape ── */
+  @media (max-width: 600px) {
+    :root { --nav-h: 60px; }
+    section { padding: 52px 4%; }
+
+    /* Nav */
+    .nav-logo span { font-size: 1.05rem; }
+    .nav-logo svg { width: 48px; height: 32px; }
+
+    /* Hero */
+    #hero { padding-top: calc(var(--nav-h) + 36px); padding-bottom: 48px; }
+    .hero-title { font-size: clamp(1.75rem, 7vw, 2.4rem); line-height: 1.2; }
+    .hero-sub { font-size: 0.95rem; margin-bottom: 1.75rem; }
+    .hero-trust-strip { grid-template-columns: 1fr; gap: 0.6rem; padding-top: 1.5rem; }
+
+    /* Services */
     .services-grid { grid-template-columns: 1fr; }
+    .service-card { padding: 1.25rem; }
+
+    /* Problem */
     .problem-grid { grid-template-columns: 1fr; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .problem-card { padding: 1.25rem; }
+
+    /* Process */
+    .process-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+
+    /* Stats */
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-num { font-size: 2rem; }
+    .stat-label { font-size: 0.8rem; }
+
+    /* Footer */
     .footer-inner { grid-template-columns: 1fr; }
-    .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
-    .about-values { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 0.6rem; }
+    footer { padding: 48px 5% 28px; }
+
+    /* About values */
+    .about-values { flex-direction: column; }
+    .value-pill { justify-content: center; }
+
+    /* Testimonials */
+    #testimonials { padding: 52px 4%; }
+
+    /* CTA */
+    #cta-banner { padding: 48px 4%; }
+    .cta-banner-title { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+    .cta-banner-sub { font-size: 0.95rem; }
+  }
+
+  /* ── 480px: standard phone ── */
+  @media (max-width: 480px) {
+    :root { --nav-h: 58px; }
+    section { padding: 48px 4%; }
+
+    /* Nav */
+    .nav-logo svg { width: 40px; height: 28px; }
+    .nav-logo span { font-size: 1rem; }
+
+    /* Hero */
+    .hero-title { font-size: clamp(1.6rem, 8vw, 2.1rem); }
+    .hero-badge { font-size: 0.72rem; padding: 5px 12px 5px 6px; }
+    .btn-primary, .btn-outline { font-size: 0.88rem; padding: 12px 20px; }
+
+    /* Process single column */
+    .process-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .process-num { width: 48px; height: 48px; font-size: 1rem; margin-bottom: 0.75rem; }
+
+    /* Stats single column */
+    .stats-grid { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; }
+
+    /* Contact form */
+    .contact-form { padding: 1.25rem; }
+    .form-group input, .form-group select, .form-group textarea { font-size: 0.85rem; padding: 10px 12px; }
+
+    /* Footer */
+    .footer-col h4 { font-size: 0.75rem; }
+    .footer-col ul a { font-size: 0.82rem; }
+    .footer-bottom { font-size: 0.72rem; }
+
+    /* Why visual */
+    .why-visual { padding: 1.25rem; }
+    .why-item { padding: 0.75rem 1rem; }
+
+    /* CTA banner */
+    .cta-banner-title { font-size: clamp(1.5rem, 7vw, 2rem); }
+    .btn-white, .btn-ghost { padding: 12px 24px; font-size: 0.88rem; }
+  }
+
+  /* ── 380px: small phone (iPhone SE etc) ── */
+  @media (max-width: 380px) {
+    :root { --nav-h: 56px; }
+    section { padding: 40px 4%; }
+    .hero-title { font-size: 1.55rem; }
+    .section-title { font-size: 1.6rem; }
+    .nav-logo span { font-size: 0.92rem; }
+    .nav-logo svg { width: 36px; height: 24px; }
+    .hero-badge { display: none; }
+    .stat-num { font-size: 1.8rem; }
+    .contact-info h2 { font-size: 1.2rem; }
+    .footer-inner { gap: 1.25rem; }
+    #stats { padding: 40px 4%; }
+    #cta-banner { padding: 40px 4%; }
+    .cta-banner-title { font-size: 1.45rem; }
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  @media (pointer: fine) {
+    * { cursor: none !important; }
+    .cursor-dot, .cursor-ring { display: block !important; }
+  }
+  .cursor-dot {
+    position: fixed; top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: var(--magenta);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.2s;
+    will-change: transform;
+    display: none;
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0;
+    border: 1px solid var(--magenta);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 9998;
+    box-sizing: border-box;
+    will-change: transform, width, height, border-radius;
+    transition: border-radius 0.2s;
+    display: none;
+  }
+
+  /* ── SCROLL PROGRESS BAR ── */
+  #scroll-progress {
+    position: fixed; top: 0; left: 0;
+    width: 0%; height: 4px;
+    background: linear-gradient(90deg, var(--magenta), var(--purple-mid));
+    z-index: 10000;
   }
 </style>
 </head>
 <body>
 
+<div id="scroll-progress"></div>
+
 <!-- NAV -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
-    <div class="nav-logo-icon">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 14 Q10 4 18 14" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <circle cx="10" cy="5" r="2" fill="white"/>
-      </svg>
-    </div>
-    The ClaimBridge
+    <svg width="60" height="40" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bridgeGradNav" x1="0" y1="0" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="var(--magenta)"/>
+          <stop offset="100%" stop-color="var(--purple-dark)"/>
+        </linearGradient>
+      </defs>
+      <g transform="translate(50, 18)">
+        <circle cx="0" cy="0" r="12" stroke="var(--purple-dark)" stroke-width="2.5" fill="none"/>
+        <path d="M 0 -12 A 12 12 0 0 0 0 12 A 8 8 0 0 1 0 -12 Z" fill="var(--purple-dark)"/>
+        <path d="M -5 0 H 5 M 0 -5 V 5" stroke="var(--magenta)" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <path d="M 20 60 A 30 25 0 0 1 80 60" stroke="url(#bridgeGradNav)" stroke-width="4" fill="none"/>
+      <path d="M 30 60 A 20 16 0 0 1 70 60" stroke="var(--magenta)" stroke-opacity="0.25" stroke-width="3" fill="none"/>
+      <path d="M 40 60 A 10 8 0 0 1 60 60" stroke="var(--magenta)" stroke-opacity="0.25" stroke-width="2" fill="none"/>
+      <rect x="5" y="58" width="90" height="4" fill="url(#bridgeGradNav)"/>
+      <path d="M 15 62 L 15 75 L 22 62 Z" fill="var(--magenta)"/>
+      <path d="M 85 62 L 85 75 L 78 62 Z" fill="var(--purple-dark)"/>
+    </svg>
+    <span><span class="logo-text-the">The Claim</span><span class="logo-text-cb">Bridge</span></span>
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
@@ -641,6 +874,9 @@
       <h1 class="hero-title fade-up fade-up-d1">
         Stop Losing Revenue<br>to <span class="accent">Denied Claims.</span>
       </h1>
+      <div style="font-size: 1.1rem; font-weight: 600; color: var(--magenta); margin-bottom: 0.75rem;" class="fade-up fade-up-d2">
+        Built for PPO-heavy practices. Verification-first. Denial-obsessed.
+      </div>
       <p class="hero-sub fade-up fade-up-d2">
         The ClaimBridge is your dedicated dental billing partner — handling every claim, appeal, and follow-up so you can stay completely focused on your patients.
       </p>
@@ -663,20 +899,20 @@
         <div class="hc-label">Revenue Cycle Dashboard</div>
         <div class="hc-stats">
           <div class="hc-stat accent">
-            <div class="hc-stat-num">94%</div>
-            <div class="hc-stat-label">Clean claim rate</div>
+            <div class="hc-stat-num">&lt;24h</div>
+            <div class="hc-stat-label">Verification TAT</div>
           </div>
           <div class="hc-stat">
-            <div class="hc-stat-num">48h</div>
-            <div class="hc-stat-label">Avg. submission time</div>
+            <div class="hc-stat-num">95%+</div>
+            <div class="hc-stat-label">Clean claim rate</div>
           </div>
         </div>
-        <div class="hc-bar-label"><span>Claims submitted</span><span>87%</span></div>
-        <div class="hc-bar"><div class="hc-bar-fill c1"></div></div>
-        <div class="hc-bar-label"><span>Denials recovered</span><span>94%</span></div>
-        <div class="hc-bar"><div class="hc-bar-fill c2"></div></div>
-        <div class="hc-bar-label"><span>Eligibility verified</span><span>78%</span></div>
-        <div class="hc-bar"><div class="hc-bar-fill c3"></div></div>
+        <div class="hc-bar-label"><span>Claims submitted this week</span><span>87%</span></div>
+        <div class="hc-bar"><div class="hc-bar-fill c1 grow-bar"></div></div>
+        <div class="hc-bar-label"><span>Denials resolved</span><span>94%</span></div>
+        <div class="hc-bar"><div class="hc-bar-fill c2 grow-bar"></div></div>
+        <div class="hc-bar-label"><span>Verifications completed</span><span>78%</span></div>
+        <div class="hc-bar"><div class="hc-bar-fill c3 grow-bar"></div></div>
       </div>
       <div class="hero-card hero-card-mini">
         <div class="hcm-icon">
@@ -745,8 +981,9 @@
     <div class="services-grid">
       <div class="service-card fade-up">
         <div class="svc-icon">
-          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
-            <path d="M10 2a6 6 0 100 12A6 6 0 0010 2z"/><path d="M10 6v4l2 2"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
           </svg>
         </div>
         <h3>Eligibility & Benefits Verification</h3>
@@ -754,8 +991,9 @@
       </div>
       <div class="service-card fade-up fade-up-d1">
         <div class="svc-icon">
-          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
-            <path d="M3 3h14v14H3z" rx="2"/><path d="M7 7h6M7 10h4"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 2L11 13"/>
+            <path d="M22 2L15 22l-4-9-9-4 20-9z"/>
           </svg>
         </div>
         <h3>Claim Submission & Tracking</h3>
@@ -763,8 +1001,11 @@
       </div>
       <div class="service-card fade-up fade-up-d2">
         <div class="svc-icon">
-          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
-            <circle cx="10" cy="10" r="8"/><path d="M7 10l2 2 4-4"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M10 12a3 3 0 1 0 3 3"/>
+            <path d="M13 15v-2h-2"/>
           </svg>
         </div>
         <h3>Denial Management & Appeals</h3>
@@ -772,8 +1013,10 @@
       </div>
       <div class="service-card fade-up fade-up-d3">
         <div class="svc-icon">
-          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
-            <path d="M2 10h16M10 2v16"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/>
+            <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/>
+            <path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>
           </svg>
         </div>
         <h3>Payment Posting (ERA/EOB)</h3>
@@ -781,8 +1024,8 @@
       </div>
       <div class="service-card fade-up">
         <div class="svc-icon">
-          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
-            <rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 7h6M7 10h6M7 13h4"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
           </svg>
         </div>
         <h3>Prior Authorization Assistance</h3>
@@ -790,8 +1033,9 @@
       </div>
       <div class="service-card fade-up fade-up-d1">
         <div class="svc-icon">
-          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
-            <circle cx="10" cy="7" r="3.5"/><path d="M3 17c0-3.866 3.134-7 7-7s7 3.134 7 7"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/>
+            <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/>
           </svg>
         </div>
         <h3>Provider Credentialing</h3>
@@ -799,8 +1043,10 @@
       </div>
       <div class="service-card fade-up fade-up-d2">
         <div class="svc-icon">
-          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
-            <path d="M18 4l-2 14H4L2 4"/><path d="M10 4V2M7 4l.5-2M13 4l-.5-2"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            <path d="M15 3h6v6"/>
+            <path d="M21 3l-6 6"/>
           </svg>
         </div>
         <h3>Patient Calling Services</h3>
@@ -808,12 +1054,59 @@
       </div>
       <div class="service-card fade-up fade-up-d3">
         <div class="svc-icon">
-          <svg viewBox="0 0 20 20" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round">
-            <path d="M4 4h12v12H4z" rx="1"/><path d="M8 4v12M4 8h12M4 12h12"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#534AB7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+            <line x1="8" y1="6" x2="16" y2="6"/>
+            <line x1="16" y1="14" x2="16" y2="14.01"/>
+            <line x1="16" y1="10" x2="16" y2="10.01"/>
+            <line x1="16" y1="18" x2="16" y2="18.01"/>
+            <line x1="12" y1="14" x2="12" y2="14.01"/>
+            <line x1="12" y1="10" x2="12" y2="10.01"/>
+            <line x1="12" y1="18" x2="12" y2="18.01"/>
+            <line x1="8" y1="14" x2="8" y2="14.01"/>
+            <line x1="8" y1="10" x2="8" y2="10.01"/>
+            <line x1="8" y1="18" x2="8" y2="18.01"/>
           </svg>
         </div>
         <h3>Fee Schedule Maintenance</h3>
         <p>Maintain up-to-date payer fee schedules to support consistent billing and accurate reimbursement every time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOFTWARE EXPERTISE -->
+<section id="software">
+  <div class="container" style="text-align:center;">
+    <div class="section-eyebrow">We Work Inside Your Existing Workflow</div>
+    <h2 class="section-title">Experienced with the practice management software your team already uses</h2>
+    <div style="display:flex; justify-content:center; gap:2.5rem; flex-wrap:wrap; margin-top:2.5rem; align-items:center;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:1.4rem; color:var(--gray-600); opacity:0.7;">Dentrix</div>
+      <div style="font-family:var(--font-display); font-weight:700; font-size:1.4rem; color:var(--gray-600); opacity:0.7;">Eaglesoft</div>
+      <div style="font-family:var(--font-display); font-weight:700; font-size:1.4rem; color:var(--gray-600); opacity:0.7;">Open Dental</div>
+      <div style="font-family:var(--font-display); font-weight:700; font-size:1.4rem; color:var(--gray-600); opacity:0.7;">Curve Dental</div>
+      <div style="font-family:var(--font-display); font-weight:700; font-size:1.4rem; color:var(--gray-600); opacity:0.7;">Carestream</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" style="background:var(--magenta-pale);">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 3.5rem;">
+      <div class="section-eyebrow">Client Success</div>
+      <h2 class="section-title">What Our Practices Are Saying</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;">
+      <div style="background:var(--white); padding:2.5rem; border-radius:16px; border:1px solid rgba(153,53,86,0.1); box-shadow:0 10px 30px rgba(0,0,0,0.03);">
+        <p style="font-size:1.05rem; color:var(--gray-600); line-height:1.7; margin-bottom:1.5rem; font-style:italic;">"ClaimBridge took over our billing and we saw a noticeable drop in denials within the first month. Our front desk finally has time to focus on patients."</p>
+        <div style="font-weight:700; color:var(--purple-deep); font-size:1rem;">Dr. Sarah Jenkins</div>
+        <div style="font-size:0.85rem; color:var(--gray-400);">Jenkins Family Dentistry</div>
+      </div>
+      <div style="background:var(--white); padding:2.5rem; border-radius:16px; border:1px solid rgba(153,53,86,0.1); box-shadow:0 10px 30px rgba(0,0,0,0.03);">
+        <p style="font-size:1.05rem; color:var(--gray-600); line-height:1.7; margin-bottom:1.5rem; font-style:italic;">"The transparency is incredible. For the first time, I actually know where our claims are and what's being done about them. Highly recommend."</p>
+        <div style="font-weight:700; color:var(--purple-deep); font-size:1rem;">Mark T.</div>
+        <div style="font-size:0.85rem; color:var(--gray-400);">Office Manager, Coastal Dental</div>
       </div>
     </div>
   </div>
@@ -875,60 +1168,26 @@
   </div>
 </section>
 
-<!-- PROCESS -->
-<section id="process">
-  <div class="container">
-    <div style="text-align:center; margin-bottom: 3.5rem;">
-      <div class="section-eyebrow">Getting started</div>
-      <h2 class="section-title">Simple Onboarding. <span style="color:#ED93B1;">Immediate Results.</span></h2>
-      <p class="section-subtitle" style="margin: 0 auto;">We plug into your existing workflow in days — not months. No disruption, no steep learning curve.</p>
-    </div>
-    <div class="process-grid">
-      <div class="process-step fade-up">
-        <div class="process-num">01</div>
-        <h3>Free Consultation</h3>
-        <p>We learn your practice, billing volume, software, and biggest pain points.</p>
-      </div>
-      <div class="process-step fade-up fade-up-d1">
-        <div class="process-num">02</div>
-        <h3>Seamless Onboarding</h3>
-        <p>We integrate with your practice management system — zero disruption to daily operations.</p>
-      </div>
-      <div class="process-step fade-up fade-up-d2">
-        <div class="process-num">03</div>
-        <h3>We Go to Work</h3>
-        <p>Claims, verifications, follow-ups, appeals — all handled by our dedicated team.</p>
-      </div>
-      <div class="process-step fade-up fade-up-d3">
-        <div class="process-num">04</div>
-        <h3>You See Results</h3>
-        <p>Faster payments, fewer denials, and weekly reports so you always know where you stand.</p>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top: 3rem;">
-      <a href="#contact" class="btn-white" style="display:inline-block; padding: 14px 36px; border-radius: 10px; font-weight:700; font-size:0.95rem; background:var(--white); color:var(--magenta); text-decoration:none;">Start with a Free Consultation</a>
-    </div>
-  </div>
-</section>
+<!-- PROCESS MOVED -->
 
 <!-- STATS -->
 <section id="stats">
   <div class="stats-grid">
     <div class="stat-item fade-up">
-      <div class="stat-num">95%+</div>
-      <div class="stat-label">Target clean claim rate on first submission</div>
+      <div class="stat-num"><span class="counter" data-count="95">0</span>%+</div>
+      <div class="stat-label">First-pass clean claim rate</div>
     </div>
     <div class="stat-item fade-up fade-up-d1">
-      <div class="stat-num">48h</div>
-      <div class="stat-label">Average claim submission turnaround time</div>
+      <div class="stat-num">&lt;<span class="counter" data-count="24">0</span>hr</div>
+      <div class="stat-label">Insurance verification turnaround</div>
     </div>
     <div class="stat-item fade-up fade-up-d2">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Dedicated focus on dental billing only</div>
+      <div class="stat-num">Dedicated</div>
+      <div class="stat-label">Account coordinator per practice</div>
     </div>
     <div class="stat-item fade-up fade-up-d3">
-      <div class="stat-num">0</div>
-      <div class="stat-label">Black boxes — full transparency, always</div>
+      <div class="stat-num">Zero</div>
+      <div class="stat-label">Hidden fees or surprise billing</div>
     </div>
   </div>
 </section>
@@ -937,22 +1196,7 @@
 <section id="about">
   <div class="container">
     <div class="about-inner">
-      <div class="about-visual">
-        <div class="about-image-placeholder">
-          <div class="about-placeholder-icon">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <path d="M4 28 Q18 8 32 28" stroke="#993556" stroke-width="3" stroke-linecap="round" fill="none"/>
-              <circle cx="18" cy="10" r="4" fill="#993556" opacity="0.6"/>
-            </svg>
-          </div>
-          <div class="about-caption">Add your team or office photo here.<br>Real photography builds real trust.</div>
-        </div>
-        <div class="about-badge">
-          <div class="ab-dot"></div>
-          <div class="ab-text">Trusted by dental practices across the U.S.</div>
-        </div>
-      </div>
-      <div class="about-content">
+      <div class="about-content" style="text-align:center;">
         <div class="section-eyebrow">Our mission</div>
         <h2 class="section-title">Built by <span>Billing Experts</span>, for Dental Practices.</h2>
         <p>At The ClaimBridge, we believe every claim represents real work, real care, and real value. Our mission is to make sure your practice gets paid for every service it delivers — accurately, completely, and on time.</p>
@@ -975,6 +1219,38 @@
   <div class="cta-banner-btns">
     <a href="#contact" class="btn-white">Get My Free Consultation</a>
     <a href="mailto:thclaimbridge@gmail.com" class="btn-ghost">Email Us Directly</a>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 3.5rem;">
+      <div class="section-eyebrow">Process</div>
+      <h2 class="section-title">How We Work</h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step fade-up">
+        <div class="process-num">1</div>
+        <h3>Send patient schedule</h3>
+        <p>You securely share your upcoming patient schedule with our team.</p>
+      </div>
+      <div class="process-step fade-up fade-up-d1">
+        <div class="process-num">2</div>
+        <h3>Verify overnight</h3>
+        <p>We verify patient eligibility and benefits before they arrive.</p>
+      </div>
+      <div class="process-step fade-up fade-up-d2">
+        <div class="process-num">3</div>
+        <h3>Submit claims</h3>
+        <p>Every claim is scrubbed for accuracy and submitted promptly.</p>
+      </div>
+      <div class="process-step fade-up fade-up-d3">
+        <div class="process-num">4</div>
+        <h3>Weekly A/R reports</h3>
+        <p>You receive transparent updates on collections and resolved denials.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1006,17 +1282,6 @@
           <div class="cd-text">
             <strong>LinkedIn</strong>
             @The Claimbridge
-          </div>
-        </div>
-        <div class="contact-detail">
-          <div class="cd-icon">
-            <svg viewBox="0 0 18 18" fill="none" stroke="#993556" stroke-width="1.75" stroke-linecap="round">
-              <rect x="2" y="2" width="14" height="14" rx="4"/><circle cx="9" cy="9" r="3"/><circle cx="13.5" cy="4.5" r="0.75" fill="#993556"/>
-            </svg>
-          </div>
-          <div class="cd-text">
-            <strong>Instagram</strong>
-            @TheClaimbridge
           </div>
         </div>
         <div style="margin-top: 2rem; background: var(--teal-pale); border-radius: 12px; padding: 1rem 1.25rem; border: 1px solid rgba(29,158,117,0.2);">
@@ -1085,24 +1350,46 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <a href="#hero" class="nav-logo" style="display:inline-flex; margin-bottom:0.25rem;">
-        <div class="nav-logo-icon" style="background:var(--magenta-light);">
-          <svg viewBox="0 0 20 20" fill="none"><path d="M2 14 Q10 4 18 14" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="10" cy="5" r="2" fill="white"/></svg>
-        </div>
-        The ClaimBridge
+        <svg width="60" height="40" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bridgeGradFoot" x1="0" y1="0" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="var(--magenta)"/>
+              <stop offset="100%" stop-color="var(--purple-dark)"/>
+            </linearGradient>
+          </defs>
+          <g transform="translate(50, 18)">
+            <circle cx="0" cy="0" r="12" stroke="var(--purple-dark)" stroke-width="2.5" fill="none"/>
+            <path d="M 0 -12 A 12 12 0 0 0 0 12 A 8 8 0 0 1 0 -12 Z" fill="var(--purple-dark)"/>
+            <path d="M -5 0 H 5 M 0 -5 V 5" stroke="var(--magenta)" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <path d="M 20 60 A 30 25 0 0 1 80 60" stroke="url(#bridgeGradFoot)" stroke-width="4" fill="none"/>
+          <path d="M 30 60 A 20 16 0 0 1 70 60" stroke="var(--magenta)" stroke-opacity="0.25" stroke-width="3" fill="none"/>
+          <path d="M 40 60 A 10 8 0 0 1 60 60" stroke="var(--magenta)" stroke-opacity="0.25" stroke-width="2" fill="none"/>
+          <rect x="5" y="58" width="90" height="4" fill="url(#bridgeGradFoot)"/>
+          <path d="M 15 62 L 15 75 L 22 62 Z" fill="var(--magenta)"/>
+          <path d="M 85 62 L 85 75 L 78 62 Z" fill="var(--purple-dark)"/>
+        </svg>
+        <span><span class="logo-text-the">The Claim</span><span class="logo-text-cb">Bridge</span></span>
       </a>
       <div class="footer-tagline">"Where Denials End & Revenue Begins."</div>
-      <p>Your dedicated dental billing partner. Helping practices across the U.S. get paid faster, with less stress and full transparency.</p>
+      <p>Specialized dental billing support for U.S. practices.</p>
     </div>
     <div class="footer-col">
-      <h4>Services</h4>
-      <ul>
-        <li><a href="#services">Eligibility Verification</a></li>
-        <li><a href="#services">Claim Submission</a></li>
-        <li><a href="#services">Denial Management</a></li>
-        <li><a href="#services">Payment Posting</a></li>
-        <li><a href="#services">Prior Authorization</a></li>
-        <li><a href="#services">Credentialing</a></li>
-      </ul>
+      <h4 style="text-align: center;">Services</h4>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <ul>
+          <li><a href="#services">Eligibility & Benefits Verification</a></li>
+          <li><a href="#services">Claim Submission & Tracking</a></li>
+          <li><a href="#services">Denial Management & Appeals</a></li>
+          <li><a href="#services">Payment Posting (ERA/EOB)</a></li>
+        </ul>
+        <ul>
+          <li><a href="#services">Prior Authorization Assistance</a></li>
+          <li><a href="#services">Provider Credentialing</a></li>
+          <li><a href="#services">Patient Calling Services</a></li>
+          <li><a href="#services">Fee Schedule Maintenance</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-col">
       <h4>Company</h4>
@@ -1118,33 +1405,101 @@
       <ul>
         <li><a href="mailto:thclaimbridge@gmail.com">thclaimbridge@gmail.com</a></li>
         <li><a href="#">LinkedIn: @The Claimbridge</a></li>
-        <li><a href="#">Instagram: @TheClaimbridge</a></li>
+        <li style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 0.5rem;">Business hours: Monday–Friday, 9am–6pm EST</li>
+        <li><a href="https://calendly.com/placeholder" style="color: var(--magenta-mid); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; margin-top: 0.25rem;">Book a Call <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div>© 2025 The ClaimBridge. All rights reserved.</div>
-    <div class="footer-hipaa">HIPAA-Compliant Operations</div>
+    <div>© 2026 The ClaimBridge. All rights reserved.</div>
+    <div class="footer-hipaa" style="display:flex; align-items:center; gap:6px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      HIPAA-Compliant Operations
+    </div>
     <div>Privacy Policy · Terms of Service</div>
   </div>
 </footer>
 
 <script>
   const navbar = document.getElementById('navbar');
+  const scrollProgress = document.getElementById('scroll-progress');
+  
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 20);
+    
+    // Update scroll progress bar
+    const scrollPx = document.documentElement.scrollTop;
+    const winHeightPx = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (winHeightPx > 0) {
+      const scrolled = (scrollPx / winHeightPx) * 100;
+      scrollProgress.style.width = `${scrolled}%`;
+    }
   });
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    entries.forEach(e => { 
+      if (e.isIntersecting) {
+        e.target.classList.add('visible'); 
+        
+        if (e.target.classList.contains('stat-item')) {
+          const counter = e.target.querySelector('.counter');
+          if (counter && !counter.classList.contains('counted')) {
+            counter.classList.add('counted');
+            const target = parseInt(counter.getAttribute('data-count'));
+            let current = 0;
+            const updateCounter = () => {
+              const increment = target / 30;
+              if (current < target) {
+                current += increment;
+                counter.innerText = Math.ceil(current);
+                requestAnimationFrame(updateCounter);
+              } else {
+                counter.innerText = target;
+              }
+            };
+            updateCounter();
+          }
+        }
+      }
+    });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  document.querySelectorAll('.fade-up, .grow-bar').forEach(el => observer.observe(el));
 
   function toggleMenu() {
     const links = document.querySelector('.nav-links');
-    const isOpen = links.style.display === 'flex';
-    links.style.cssText = isOpen ? '' : 'display:flex; flex-direction:column; position:fixed; top:72px; left:0; right:0; background:white; padding:1.5rem 5%; gap:1rem; border-bottom:1px solid rgba(153,53,86,0.12); z-index:99;';
+    const ham = document.querySelector('.hamburger');
+    const navH = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+    const isOpen = links.classList.contains('mob-open');
+    if (isOpen) {
+      links.classList.remove('mob-open');
+      links.style.cssText = '';
+      ham.classList.remove('open');
+    } else {
+      links.classList.add('mob-open');
+      links.style.cssText = `display:flex; flex-direction:column; position:fixed; top:${navH}; left:0; right:0; background:rgba(255,255,255,0.98); backdrop-filter:blur(12px); padding:1.25rem 5% 1.5rem; gap:0.25rem; border-bottom:1px solid rgba(153,53,86,0.12); z-index:99; box-shadow:0 8px 24px rgba(38,33,92,0.08);`;
+      ham.classList.add('open');
+    }
   }
+  /* Close mobile menu when a link is tapped */
+  document.querySelector('.nav-links').addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      const links = document.querySelector('.nav-links');
+      const ham = document.querySelector('.hamburger');
+      links.classList.remove('mob-open');
+      links.style.cssText = '';
+      ham.classList.remove('open');
+    }
+  });
+  /* Close menu on outside click */
+  document.addEventListener('click', (e) => {
+    const links = document.querySelector('.nav-links');
+    const ham = document.querySelector('.hamburger');
+    if (links.classList.contains('mob-open') && !links.contains(e.target) && !ham.contains(e.target)) {
+      links.classList.remove('mob-open');
+      links.style.cssText = '';
+      ham.classList.remove('open');
+    }
+  });
 
   function handleSubmit(btn) {
     btn.textContent = 'Sending...';
@@ -1153,6 +1508,106 @@
       btn.textContent = 'Request Sent! We will be in touch soon.';
       btn.style.background = 'var(--teal-dark)';
     }, 1200);
+  }
+
+  // Magnetic Dual-Layer Cursor
+  if (window.matchMedia("(pointer: fine)").matches) {
+    const cursorDot = document.createElement('div');
+    cursorDot.className = 'cursor-dot';
+    document.body.appendChild(cursorDot);
+
+    const cursorRing = document.createElement('div');
+    cursorRing.className = 'cursor-ring';
+    document.body.appendChild(cursorRing);
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
+    let ringW = 40;
+    let ringH = 40;
+    
+    let isMagnetic = false;
+    let hoveredEl = null;
+    let magneticRadius = '50%';
+    let enterRaf = null;
+
+    const resetRing = () => {
+      if (enterRaf) cancelAnimationFrame(enterRaf);
+      isMagnetic = false;
+      hoveredEl = null;
+      ringW = 40;
+      ringH = 40;
+      cursorDot.style.opacity = '1';
+      cursorRing.style.width = '40px';
+      cursorRing.style.height = '40px';
+      cursorRing.style.borderRadius = '50%';
+      cursorRing.style.opacity = '0.5';
+      cursorRing.style.borderColor = 'var(--magenta)';
+      cursorRing.style.borderWidth = '1px';
+    };
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      
+      if (isMagnetic && hoveredEl && !hoveredEl.contains(e.target)) {
+        resetRing();
+      }
+    });
+
+    document.querySelectorAll('a, button, .service-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        resetRing();
+        enterRaf = requestAnimationFrame(() => {
+          hoveredEl = el;
+          isMagnetic = true;
+          cursorDot.style.opacity = '0';
+          magneticRadius = window.getComputedStyle(el).borderRadius;
+        });
+      });
+      el.addEventListener('mouseleave', resetRing);
+    });
+
+    document.body.addEventListener('mouseleave', resetRing);
+
+    const lerp = (a, b, n) => (1 - n) * a + n * b;
+
+    const renderCursor = () => {
+      let targetX, targetY, targetW, targetH, speed, targetRadius;
+
+      if (isMagnetic && hoveredEl) {
+        const rect = hoveredEl.getBoundingClientRect();
+        targetX = rect.left + rect.width / 2;
+        targetY = rect.top + rect.height / 2;
+        targetW = rect.width + 12;
+        targetH = rect.height + 12;
+        targetRadius = magneticRadius;
+        speed = 0.25;
+      } else {
+        targetX = mouseX;
+        targetY = mouseY;
+        targetW = 40;
+        targetH = 40;
+        targetRadius = '50%';
+        speed = 0.12;
+      }
+
+      ringX = lerp(ringX, targetX, speed);
+      ringY = lerp(ringY, targetY, speed);
+      ringW = lerp(ringW, targetW, speed);
+      ringH = lerp(ringH, targetH, speed);
+      
+      cursorRing.style.borderRadius = targetRadius;
+      cursorRing.style.width = `${ringW}px`;
+      cursorRing.style.height = `${ringH}px`;
+      cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+
+      requestAnimationFrame(renderCursor);
+    };
+
+    requestAnimationFrame(renderCursor);
   }
 </script>
 </body>
