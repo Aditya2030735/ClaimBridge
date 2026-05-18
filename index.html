@@ -318,7 +318,7 @@
   .grow-bar { width: 0 !important; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
   .grow-bar.visible.c1 { width: 87% !important; }
   .grow-bar.visible.c2 { width: 94% !important; }
-  .grow-bar.visible.c3 { width: 78% !important; }
+  .grow-bar.visible.c3 { width: 98% !important; }
 
 
 
@@ -984,7 +984,7 @@
         <div class="hc-bar"><div class="hc-bar-fill c1 grow-bar"></div></div>
         <div class="hc-bar-label"><span>Denials resolved</span><span>94%</span></div>
         <div class="hc-bar"><div class="hc-bar-fill c2 grow-bar"></div></div>
-        <div class="hc-bar-label"><span>Verifications completed</span><span>78%</span></div>
+        <div class="hc-bar-label"><span>Verifications completed</span><span>98%</span></div>
         <div class="hc-bar"><div class="hc-bar-fill c3 grow-bar"></div></div>
       </div>
 
@@ -1356,7 +1356,14 @@
         </div>
       </div>
       <div class="contact-form slide-right">
-        <form name="consultation" method="POST" netlify data-netlify="true" onsubmit="return handleSubmit(event)">
+        <div id="form-success" style="display:none; text-align:center; padding:2.5rem 1.5rem;">
+          <div style="width:64px; height:64px; border-radius:50%; background:var(--teal-pale); display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--teal-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h3 style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--purple-deep); margin-bottom:0.6rem;">Request Sent!</h3>
+          <p style="font-size:0.95rem; color:var(--gray-600); line-height:1.7;">Thank you — we'll reach out within one business day to set up your free consultation.</p>
+        </div>
+        <form id="consultation-form" name="consultation" method="POST" netlify data-netlify="true" onsubmit="return handleSubmit(event)">
           <input type="hidden" name="form-name" value="consultation">
           <div class="form-row">
             <div class="form-group">
@@ -1566,6 +1573,8 @@
   });
 
   function handleSubmit(e) {
+    e.preventDefault();
+
     const fields = [
       { id: 'f-practice', msg: 'Practice name is required.' },
       { id: 'f-name',     msg: 'Your name is required.' },
@@ -1587,7 +1596,6 @@
       const el = document.getElementById(f.id);
       let value = el.value.trim();
 
-      // Basic email format check
       if (f.id === 'f-email' && value) {
         const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         if (!emailOk) {
@@ -1603,16 +1611,28 @@
       }
     });
 
-    if (!valid) {
-      e.preventDefault();
-      return false;
-    }
+    if (!valid) return false;
 
-    // Show sending state
-    const btn = e.target.querySelector('button[type="submit"]');
+    const form = document.getElementById('consultation-form');
+    const btn  = form.querySelector('button[type="submit"]');
     btn.textContent = 'Sending...';
     btn.style.background = 'var(--teal)';
     btn.disabled = true;
+
+    const data = new FormData(form);
+
+    fetch('/', { method: 'POST', body: data })
+      .then(() => {
+        form.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      })
+      .catch(() => {
+        btn.textContent = 'Something went wrong — please try again.';
+        btn.style.background = '#e53e3e';
+        btn.disabled = false;
+      });
+
+    return false;
   }
 
   function markError(el, msg) {
